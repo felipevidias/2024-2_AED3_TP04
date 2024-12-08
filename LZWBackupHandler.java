@@ -154,9 +154,7 @@ public class LZWBackupHandler extends LZW {
     }
 
     public String selectBackupVersion() {
-        // Aqui você pode implementar uma lógica para permitir ao usuário selecionar uma
-        // versão
-        // Ou então verificar se o diretório de backups contém arquivos válidos.
+
         Scanner scanf = new Scanner(System.in);
         System.out.println("Digite o número da versão do backup (exemplo: 2024-12-08): ");
         String backupVersion = scanf.nextLine();
