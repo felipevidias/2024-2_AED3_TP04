@@ -112,14 +112,16 @@ Implementa o algoritmo de compactação e descompactação **LZW**.
 
 ### **Instruções para Execução**  
 
-1. **Configuração Inicial:**  
-   - Defina os diretórios `sourceDir` e `backupDir` no código para especificar onde os arquivos estão e onde os backups serão armazenados.  
+1. Execute o Main com: javac Main.java
 
-2. **Criação de Backup:**  
-   - Execute o método `createBackup()` para criar um backup compactado dos arquivos no diretório de origem.  
+2. No MENU escolha a opção 4) para realizar o backup : 
+        0) Sair......................
+        1) Tarefas...................
+        2) Categorias................
+        3) Etiquetas.................
+        4) Realizar Backup dos Dados.
+        5) Restaurar Backup dos Dados
+   
+3. Após a execução do Backup, escolha a opção 5) e escolha qual arquivo ira restaurar os dados 
 
-3. **Restauração de Backup:**  
-   - Execute o método `restoreBackup()` para listar as versões de backup disponíveis e restaurar a desejada.  
 
-4. **Verificar Resultados:**  
-   - Compare os tamanhos dos arquivos originais e compactados para verificar a eficiência da compressão.  
