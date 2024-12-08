@@ -114,14 +114,8 @@ Implementa o algoritmo de compactação e descompactação **LZW**.
 
 1. Execute o Main com: javac Main.java
 
-2. No MENU escolha a opção 4) para realizar o backup : 
-        - 0) Sair......................
-        - 1) Tarefas...................
-        - 2) Categorias................
-        - 3) Etiquetas.................
-        - 4) Realizar Backup dos Dados.
-        - 5) Restaurar Backup dos Dados
+2. No MENU escolha a opção  4) Realizar Backup dos Dados para realizar o backup 
    
-3. Após a execução do Backup, escolha a opção 5) e escolha qual arquivo ira restaurar os dados 
+3. Após a execução do Backup, escolha a opção 5) Restaurar Backup dos Dados e escolha qual arquivo ira restaurar os dados 
 
 
