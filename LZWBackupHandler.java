@@ -2,6 +2,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 public class LZWBackupHandler extends LZW {
 
@@ -18,6 +19,9 @@ public class LZWBackupHandler extends LZW {
 
         String backupFilePath = backupFolder.getAbsolutePath() + "/backup.lzw";
 
+        long originalSize = 0; // Tamanho total dos arquivos originais
+        long compressedSize = 0; // Tamanho do arquivo compactado
+
         try (FileOutputStream backupStream = new FileOutputStream(backupFilePath)) {
             File[] filesToBackup = new File(SOURCE_DIR).listFiles(File::isFile);
 
@@ -28,16 +32,34 @@ public class LZWBackupHandler extends LZW {
 
             for (File file : filesToBackup) {
                 System.out.println("Comprimindo arquivo: " + file.getName());
+                originalSize += file.length(); // Soma o tamanho do arquivo original
+
                 try (FileInputStream fileStream = new FileInputStream(file)) {
                     byte[] compressedData = compressStream(fileStream);
+                    compressedSize += compressedData.length; // Soma o tamanho dos dados comprimidos
                     writeFileToBackup(backupStream, file.getName(), compressedData);
                 }
             }
+
             System.out.println("Backup concluído com sucesso!");
+        }
+
+        // Exibe a taxa de compressão
+        if (originalSize > 0) {
+            double compressionRate = (1 - ((double) compressedSize / originalSize)) * 100;
+            System.out.printf("Taxa de compressão: %.2f%%%n", compressionRate);
+        } else {
+            System.out.println("Tamanho original dos arquivos é zero. Não foi possível calcular a taxa de compressão.");
         }
     }
 
-    public void restoreBackup(String backupFilePath) throws Exception {
+    public void restoreBackup() throws Exception {
+        String backupFilePath = selectBackupVersion();
+        if (backupFilePath == null) {
+            System.out.println("Nenhum backup selecionado para restauração.");
+            return;
+        }
+
         File backupFile = new File(backupFilePath);
         if (!backupFile.exists()) {
             throw new FileNotFoundException("Arquivo de backup não encontrado.");
@@ -129,6 +151,25 @@ public class LZWBackupHandler extends LZW {
                 ((bytes[1] & 0xFF) << 16) |
                 ((bytes[2] & 0xFF) << 8) |
                 (bytes[3] & 0xFF);
+    }
+
+    public String selectBackupVersion() {
+        // Aqui você pode implementar uma lógica para permitir ao usuário selecionar uma
+        // versão
+        // Ou então verificar se o diretório de backups contém arquivos válidos.
+        Scanner scanf = new Scanner(System.in);
+        System.out.println("Digite o número da versão do backup (exemplo: 2024-12-08): ");
+        String backupVersion = scanf.nextLine();
+
+        // Verifica se o arquivo de backup para essa versão existe
+        String backupFilePath = BACKUP_DIR + backupVersion + "/backup.lzw";
+        File backupFile = new File(backupFilePath);
+        if (backupFile.exists()) {
+            return backupFilePath;
+        } else {
+            System.out.println("Backup não encontrado para a versão: " + backupVersion);
+            return null;
+        }
     }
 
     private String getCurrentDate() {

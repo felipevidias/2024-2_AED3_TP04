@@ -21,11 +21,11 @@ public class Main {
         /* Printando na tela as Opções */
         System.out.println("---MENU---");
 
-        System.out.println("0) Sair......");
-        System.out.println("1) Tarefas...");
-        System.out.println("2) Categorias");
-        System.out.println("3) Etiquetas.");
-        System.out.println("4) Realizar Backup dos Dados");
+        System.out.println("0) Sair......................");
+        System.out.println("1) Tarefas...................");
+        System.out.println("2) Categorias................");
+        System.out.println("3) Etiquetas.................");
+        System.out.println("4) Realizar Backup dos Dados.");
         System.out.println("5) Restaurar Backup dos Dados");
 
         resposta = scanf.nextInt();
@@ -74,11 +74,9 @@ public class Main {
 
   // Método para restaurar backup
   public static void restaurarBackup(LZWBackupHandler backupLZW) {
-    Scanner scanf = new Scanner(System.in);
-    System.out.println("Digite o caminho do arquivo de backup para restaurar: ");
-    String caminhoBackup = scanf.nextLine();
     try {
-      backupLZW.restoreBackup(caminhoBackup);
+      // Chamar diretamente o método restoreBackup para listar e restaurar o backup
+      backupLZW.restoreBackup();
     } catch (Exception e) {
       System.out.println("Erro ao restaurar backup: " + e.getMessage());
     }
