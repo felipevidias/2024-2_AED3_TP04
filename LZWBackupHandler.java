@@ -29,7 +29,7 @@ public class LZWBackupHandler extends LZW {
     }
 
     private String getCurrentDate() {
-        return new SimpleDateFormat("yyyy-MM-dd").format(new Date(0));
+        return new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
     }
 
     private File prepareBackupFolder(String date) {
