@@ -6,13 +6,13 @@ import java.util.Scanner;
 
 public class LZWBackupHandler extends LZW {
 
-    private static final int BUFFER_SIZE = 1024;
-    private static final String SOURCE_DIR = "./dados";
-    private static final String BACKUP_DIR = "./backup/";
+    private static final int bufferSize = 1024;
+    private static final String sourceDir = "./dados";
+    private static final String backupDir = "./backup/";
 
     public void createBackup() throws Exception {
         String backupDate = getCurrentDate();
-        File backupFolder = new File(BACKUP_DIR + backupDate);
+        File backupFolder = new File(backupDir + backupDate);
         if (!backupFolder.exists() && !backupFolder.mkdirs()) {
             throw new IOException("Falha ao criar o diretório de backup.");
         }
@@ -23,7 +23,7 @@ public class LZWBackupHandler extends LZW {
         long compressedSize = 0; // Tamanho do arquivo compactado
 
         try (FileOutputStream backupStream = new FileOutputStream(backupFilePath)) {
-            File[] filesToBackup = new File(SOURCE_DIR).listFiles(File::isFile);
+            File[] filesToBackup = new File(sourceDir).listFiles(File::isFile);
 
             if (filesToBackup == null || filesToBackup.length == 0) {
                 System.out.println("Nenhum arquivo encontrado para backup.");
@@ -71,7 +71,7 @@ public class LZWBackupHandler extends LZW {
                 byte[] compressedData = readCompressedData(backupStream);
                 byte[] decompressedData = decompressStream(new ByteArrayInputStream(compressedData));
 
-                Path restoredFilePath = Paths.get(SOURCE_DIR, fileName);
+                Path restoredFilePath = Paths.get(sourceDir, fileName);
                 Files.createDirectories(restoredFilePath.getParent());
                 Files.write(restoredFilePath, decompressedData);
                 System.out.println("Arquivo restaurado: " + fileName);
@@ -81,7 +81,7 @@ public class LZWBackupHandler extends LZW {
 
     private byte[] compressStream(InputStream inputStream) throws Exception {
         ByteArrayOutputStream compressedStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[BUFFER_SIZE];
+        byte[] buffer = new byte[bufferSize];
         int bytesRead;
 
         while ((bytesRead = inputStream.read(buffer)) != -1) {
@@ -93,7 +93,7 @@ public class LZWBackupHandler extends LZW {
 
     private byte[] decompressStream(InputStream inputStream) throws Exception {
         ByteArrayOutputStream decompressedStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[BUFFER_SIZE];
+        byte[] buffer = new byte[bufferSize];
         int bytesRead;
 
         while ((bytesRead = inputStream.read(buffer)) != -1) {
@@ -154,13 +154,15 @@ public class LZWBackupHandler extends LZW {
     }
 
     public String selectBackupVersion() {
-
+        // Aqui você pode implementar uma lógica para permitir ao usuário selecionar uma
+        // versão
+        // Ou então verificar se o diretório de backups contém arquivos válidos.
         Scanner scanf = new Scanner(System.in);
         System.out.println("Digite o número da versão do backup (exemplo: 2024-12-08): ");
         String backupVersion = scanf.nextLine();
 
         // Verifica se o arquivo de backup para essa versão existe
-        String backupFilePath = BACKUP_DIR + backupVersion + "/backup.lzw";
+        String backupFilePath = backupDir + backupVersion + "/backup.lzw";
         File backupFile = new File(backupFilePath);
         if (backupFile.exists()) {
             return backupFilePath;
