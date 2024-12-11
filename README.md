@@ -1,7 +1,7 @@
 # README - **TP4: Backup Compactado**
 
 ### **Desenvolvido por:**  
-Ana Cristina, Felipe Vilhena, Kenia Teixeira, Lucas Gabriel  
+Ana Cristina, Felipe Vilhena Dias, Kenia Teixeira, Lucas Gabriel  
 
 ---
 
@@ -13,7 +13,7 @@ As principais funcionalidades incluem:
 - Restauração de backups com seleção de versões.  
 - Utilização de estruturas otimizadas para manipulação de dados, como **fluxos de bytes compactados**.  
 
-O sistema foca em economia de espaço e recuperação confiável de dados, proporcionando alta taxa de compressão.
+O sistema garante economia de espaço e recuperação confiável de dados, proporcionando uma taxa de compressão eficiente, dependendo dos dados armazenados.
 
 ---
 
@@ -49,15 +49,15 @@ Gerencia o processo de backup e restauração, utilizando o algoritmo **LZW**.
 
 **Métodos:**  
 - `createBackup()`:  
-  Cria um backup compactado com base nos arquivos do diretório de origem.  
+  Criar um backup compactado com base nos arquivos do diretório de origem.  
 - `restoreBackup()`:  
-  Permite selecionar e restaurar uma versão de backup.  
+  Selecionar e restaurar uma versão de backup.  
 - `compressStream(InputStream inputStream)`:  
-  Compacta dados de entrada usando o algoritmo **LZW**.  
+  Compactar dados de entrada usando o algoritmo **LZW**.  
 - `decompressStream(InputStream inputStream)`:  
-  Descompacta dados utilizando o mesmo algoritmo.  
+  Descompactar dados utilizando o mesmo algoritmo.  
 - `selectBackupVersion()`:  
-  Lista as versões disponíveis para recuperação e permite a seleção.  
+  Listar as versões disponíveis para recuperação e permitir a seleção.  
 
 ---
 
@@ -70,11 +70,53 @@ Implementa o algoritmo de compactação e descompactação **LZW**.
 
 **Métodos:**  
 - `codifica(byte[] msgBytes)`:  
-  Realiza a compactação de uma mensagem.  
+  Realizar a compactação de uma mensagem.  
 - `decodifica(byte[] msgCodificada)`:  
-  Realiza a descompactação de uma mensagem.  
+  Realizar a descompactação de uma mensagem.  
 
 ---
+
+### **Classe VetorDeBits**  
+
+A classe `VetorDeBits` fornece uma estrutura para manipular bits individualmente, utilizando a classe `BitSet` do Java como base. Ela permite a manipulação eficiente de bits, além de conversão para arrays de bytes e representação textual.
+
+**Atributos:**  
+- `BitSet vetor`:  
+  Objeto da classe `BitSet` que armazena os bits manipulados pela classe.  
+
+**Métodos:**  
+- `VetorDeBits()`:  
+  Construtor padrão que inicializa o vetor de bits com um único bit definido como `1` no índice `0`.  
+
+- `VetorDeBits(int n)`:  
+  Inicializa o vetor de bits com tamanho mínimo `n` e define o bit no índice `n`.  
+
+- `VetorDeBits(byte[] v)`:  
+  Constrói o vetor de bits a partir de um array de bytes fornecido como entrada.  
+
+- `byte[] toByteArray()`:  
+  Retorna o vetor de bits como um array de bytes, ideal para persistência ou transmissão de dados.  
+
+- `void set(int i)`:  
+  Define o bit no índice `i` como `1`. Caso o índice seja maior que o comprimento atual, ajusta o vetor dinamicamente.  
+
+- `void clear(int i)`:  
+  Define o bit no índice `i` como `0`. Caso o índice seja maior que o comprimento atual, ajusta o vetor dinamicamente.  
+
+- `boolean get(int i)`:  
+  Retorna o estado do bit no índice `i` (`true` para `1` e `false` para `0`).  
+
+- `int length()`:  
+  Retorna o comprimento do vetor de bits, excluindo o bit adicional de controle.  
+
+- `int size()`:  
+  Retorna o tamanho interno do vetor de bits.  
+
+- `String toString()`:  
+  Retorna uma representação textual do vetor de bits, composta por `0`s e `1`s.  
+
+---
+
 
 ### **Checklist**  
 
@@ -106,16 +148,12 @@ Implementa o algoritmo de compactação e descompactação **LZW**.
    **Sim**, todas as funcionalidades planejadas foram implementadas com sucesso.  
 
 7. **O trabalho é original e não a cópia de um trabalho de um colega?**  
-   A parte do LZW e implementação do mesmo é original, com auxilio do código do professor Kutova. Porém a parte do TP3 é de outro grupo.
+   O algoritmo LZW foi implementado com base no aprendizado em sala de aula, utilizando referências fornecidas pelo professor Kutova.
 
---- 
+---
 
 ### **Instruções para Execução**  
 
-1. Execute o Main com: javac Main.java
-
-2. No MENU escolha a opção  4) Realizar Backup dos Dados para realizar o backup 
-   
-3. Após a execução do Backup, escolha a opção 5) Restaurar Backup dos Dados e escolha qual arquivo ira restaurar os dados 
-
-
+1. Compile o programa com:  
+   ```bash
+   javac Main.java
